@@ -8,6 +8,12 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.URI;
+
+
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -21,7 +27,7 @@ import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 
 
-//@Route("main")
+@Route
 public class MainView extends VerticalLayout {
 
     private List<MessageListItem> messages;
@@ -32,38 +38,51 @@ public class MainView extends VerticalLayout {
         setPadding(false);
         setSpacing(false);
 
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+
         messages = new ArrayList<>();
         MessageList messageList = new MessageList();
+        messageList.setWidth("75%");
+        messageList.getStyle().set("flex-grow1", "1").set("overflow", "auto");
 
-        // Set the MessageList to take up the rest of the space
-        messageList.setWidthFull();
-        messageList.setHeightFull(); // Full height to take up the available space
-        messageList.getStyle().set("overflow", "auto"); // Allow scrolling for long messages
+        VerticalLayout messageContainer = new VerticalLayout(messageList);
+        messageContainer.setPadding(false);
+        messageContainer.getStyle().set("overflow", "hidden");
 
         MessageInput messageInput = new MessageInput();
+        messageInput.setWidth("50%");
         messageInput.addSubmitListener(submitEvent -> {
             String userMessage = submitEvent.getValue();
-            Notification.show("Message received: " + userMessage, 3000, Notification.Position.MIDDLE);
 
-            MessageListItem newItem = new MessageListItem(
-                    userMessage,
-                    Instant.now(),
-                    "User"
-            );
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:8080/api/chat/send"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(userMessage))
+                        .build();
 
-            messages.add(newItem);
-            messageList.setItems(messages);
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Scroll to the bottom when a new message is added
-            messageList.getElement().executeJs("this.scrollTop = this.scrollHeight;");
+                String assistantResponse = response.body();
+
+                MessageListItem userItem = new MessageListItem(userMessage, Instant.now(), "User");
+                MessageListItem assistantItem = new MessageListItem(assistantResponse, Instant.now(), "Assistant");
+
+                messages.add(userItem);
+                messages.add(assistantItem);
+                messageList.setItems(messages);
+
+                // Scroll to the bottom when a new message is added
+                messageList.getElement().executeJs("this.scrollTop = this.scrollHeight;");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Notification.show("Error sending message", 3000, Notification.Position.MIDDLE);
+            }
+
+            messageInput.getElement().executeJs("this.value=''"); // Manually clear the value in the input
         });
-
-        // Make sure the message input is always at the bottom
-        messageInput.setWidthFull();
-        messageInput.getStyle().set("position", "fixed");
-        messageInput.getStyle().set("bottom", "0");
-        messageInput.getStyle().set("left", "0");
-        messageInput.getStyle().set("right", "0");
 
         add(messageList, messageInput);
         setFlexGrow(1, messageList); // Ensure messageList takes up the remaining space

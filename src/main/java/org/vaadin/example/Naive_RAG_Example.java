@@ -56,7 +56,7 @@ public class Naive_RAG_Example {
         startConversationWith(assistant);
     }
 
-    private static Assistant createAssistant(String documentPath) {
+    static Assistant createAssistant(String documentPath) {
 
         // First, let's create a chat model, also known as a LLM, which will answer our queries.
         // In this example, we will use OpenAI's gpt-4o-mini, but you can choose any supported model
