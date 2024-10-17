@@ -1,11 +1,12 @@
 package org.vaadin.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Hr;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 
 import java.net.http.HttpClient;
@@ -14,47 +15,62 @@ import java.net.http.HttpResponse;
 import java.net.URI;
 
 
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
+import org.vaadin.firitin.components.messagelist.MarkdownMessage;
 
 
 @Route
 public class MainView extends VerticalLayout {
+    private Button clearChatButton;
+    private VerticalLayout messageList;
+    private MessageInput messageInput;
+    private H2 Title;
 
     private List<MessageListItem> messages;
 
     public MainView() {
 
-        setSizeFull();
-        setPadding(false);
-        setSpacing(false);
+        this.clearChatButton = new Button("Clear Chat");
+        this.messageList = new VerticalLayout();  //
+        this.messageInput = new MessageInput();
 
-        setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
+        this.Title = new H2("OSHA Expert Conversation");
 
-        messages = new ArrayList<>();
-        MessageList messageList = new MessageList();
-        messageList.setWidth("75%");
-        messageList.getStyle().set("flex-grow1", "1").set("overflow", "auto");
+        this.Title.addClassName(LumoUtility.AlignContent.CENTER);
 
-        VerticalLayout messageContainer = new VerticalLayout(messageList);
-        messageContainer.setPadding(false);
-        messageContainer.getStyle().set("overflow", "hidden");
+        // setPadding and setSpacing below
+        setPadding(true);
+        setSpacing(true);
+        this.messageList.setSpacing(false);
 
-        MessageInput messageInput = new MessageInput();
-        messageInput.setWidth("50%");
+        // messageList area and clearChat button are given styling attributes
+        this.messageList.addClassNames(LumoUtility.Padding.Horizontal.XSMALL, LumoUtility.Margin.Horizontal.XSMALL,
+                LumoUtility.MaxWidth.SCREEN_LARGE);
+        this.clearChatButton.addClassName("clear-chat-button");
+
+        // Listening event to clear chat on clearChatButton click
+        this.clearChatButton.addClickListener(e -> {
+            this.messageList.removeAll();
+            focusMessageInput();
+        });
+
+        // Set the messageInput text box to assume the rest of available width alongside Send button
+        this.messageInput.setWidthFull();
+
+        // Add styling attributes to the messageInput textfield (Horizontal/Vertical padding, horizontal margin and
+        // the max width related to the screen of the device
+        this.messageInput.addClassNames(LumoUtility.Padding.Horizontal.XSMALL, LumoUtility.Padding.Vertical.MEDIUM,
+                LumoUtility.Margin.Horizontal.XSMALL, LumoUtility.MaxWidth.SCREEN_XLARGE);
+
+
+
         messageInput.addSubmitListener(submitEvent -> {
             String userMessage = submitEvent.getValue();
-
             try {
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
@@ -65,14 +81,16 @@ public class MainView extends VerticalLayout {
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                String assistantResponse = response.body();
 
-                MessageListItem userItem = new MessageListItem(userMessage, Instant.now(), "User");
-                MessageListItem assistantItem = new MessageListItem(assistantResponse, Instant.now(), "Assistant");
+                MarkdownMessage question = new MarkdownMessage(userMessage, "You");
+                question.addClassName("user");
 
-                messages.add(userItem);
-                messages.add(assistantItem);
-                messageList.setItems(messages);
+                MarkdownMessage reply = new MarkdownMessage(response.body(), "Assistant");
+                reply.addClassName("assistant");
+
+                // Add the user query first and then the reply to the messageList
+                this.messageList.add(question);
+                this.messageList.add(reply);
 
                 // Scroll to the bottom when a new message is added
                 messageList.getElement().executeJs("this.scrollTop = this.scrollHeight;");
@@ -84,7 +102,37 @@ public class MainView extends VerticalLayout {
             messageInput.getElement().executeJs("this.value=''"); // Manually clear the value in the input
         });
 
-        add(messageList, messageInput);
-        setFlexGrow(1, messageList); // Ensure messageList takes up the remaining space
+        add(this.Title);
+        add(new Hr());
+
+        // This creates the section of the app for the messages to fill up and sets it to be scrollable. Width takes
+        // up the hole space
+        Scroller scroller = new Scroller(this.messageList);
+        scroller.setWidthFull();
+        scroller.addClassName(LumoUtility.AlignContent.END);
+        addAndExpand(scroller);
+
+        focusMessageInput(); // Uses method defined below to focus on messageInput box so the user doesn't have to
+        // click on it before typing
+
+
+
+        HorizontalLayout inputLayout = new HorizontalLayout();
+        inputLayout.setWidthFull();
+        inputLayout.setSpacing(true); // Adds default spacing between components
+        inputLayout.add(clearChatButton, messageInput);
+        inputLayout.setAlignItems(Alignment.BASELINE);
+        inputLayout.setFlexGrow(1, messageInput); // Ensure messageInput takes up remaining space
+
+        add(inputLayout);
+
+
+        // Add the horizontal layout to the view
+        add(inputLayout);
+    }
+
+    private void focusMessageInput() {
+        this.messageInput.getElement().executeJs("requestAnimationFrame(() => this.querySelector('vaadin-text-area')" +
+                ".focus() )");
     }
 }
