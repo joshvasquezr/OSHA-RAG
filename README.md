@@ -18,3 +18,10 @@ Clicking on the green run button will start the application.
 
 After the application has started, the user can view the application at http://localhost:8080/ in their browser.
 
+<hr>
+
+<p>To test the chatbot, some relevant queries are listed below:</p>
+<ul>
+<li>What are regulations that you can point me to given my following situation: We have a room that we have two painting booths in that we use to spray aircraft parts. This paint contains hexavalent chromium and is the main hazard that we are concerned about. Industrial hygienists working with us have also identified they only have three breathing zone samples during our painting operations. They say that one of those breathing samples has an 8-hr TWA that is really close to something called the action level and two have 8-hr TWA’s that are close to zero. Even though all the samples are below, they still seem concerned about the one that's really close to the action level. Do we have to close painting operations until they take more sampling?<ul>
+<li>Expand on the RP requirements<ul><li>What kind of medical evaluations do we need if we were to have samples with an 8-hr TWA over the OEL?<ul><li>What kind of medical tests should we receive?</li></ul></li></ul></li></ul></li>
+</ul>
