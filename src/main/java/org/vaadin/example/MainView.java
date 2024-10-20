@@ -59,13 +59,7 @@ public class MainView extends VerticalLayout {
             focusMessageInput();
         });
 
-        // Set the messageInput text box to assume the rest of available width alongside Send button
-        this.messageInput.setWidthFull();
 
-        // Add styling attributes to the messageInput textfield (Horizontal/Vertical padding, horizontal margin and
-        // the max width related to the screen of the device
-        this.messageInput.addClassNames(LumoUtility.Padding.Horizontal.XSMALL, LumoUtility.Padding.Vertical.MEDIUM,
-                LumoUtility.Margin.Horizontal.XSMALL, LumoUtility.MaxWidth.SCREEN_XLARGE);
 
 
 
@@ -94,6 +88,7 @@ public class MainView extends VerticalLayout {
 
                 // Scroll to the bottom when a new message is added
                 messageList.getElement().executeJs("this.scrollTop = this.scrollHeight;");
+
             } catch (Exception e) {
                 e.printStackTrace();
                 Notification.show("Error sending message", 3000, Notification.Position.MIDDLE);
@@ -116,6 +111,10 @@ public class MainView extends VerticalLayout {
         // click on it before typing
 
 
+        // Add styling attributes to the messageInput textfield (Horizontal/Vertical padding, horizontal margin and
+        // the max width related to the screen of the device
+        this.messageInput.addClassNames(LumoUtility.Padding.Horizontal.XSMALL, LumoUtility.Padding.Vertical.MEDIUM,
+                LumoUtility.Margin.Horizontal.XSMALL, LumoUtility.MaxWidth.SCREEN_XLARGE);
 
         HorizontalLayout inputLayout = new HorizontalLayout();
         inputLayout.setWidthFull();
@@ -124,7 +123,7 @@ public class MainView extends VerticalLayout {
         inputLayout.setAlignItems(Alignment.BASELINE);
         inputLayout.setFlexGrow(1, messageInput); // Ensure messageInput takes up remaining space
 
-        add(inputLayout);
+//        add(inputLayout);
 
 
         // Add the horizontal layout to the view
