@@ -1,12 +1,14 @@
 # Application Overview
-This application is a single-windowed version of the OSHA-Expert RAG
+
+<p>Co-developed by John Riordan and Joshua Vasquez-Ruiz, this application was produced for the course CS514 taught by Dr. David Wolber at the University of San Francisco. Assigned as the course's third project, this project was designed to leverage the capabilities that Vaadin, an open-source web application development platform for Java, offered to develop an Generative AI application using OpenAI.</p>
+
+<p>The focus of this application was to create a chat bot that was capable of providing insight into occupational health regulations and requirements covered by Title 29 of the Code of Federal Regulations Part 1910. In PDF form, this collection of regulations that covers the Occupational Safety and Health Act, known as OSHA, spans over 600 pages. Documents such as this, if paired with a chat bot that could provide insight into these large information-bases, would be immensely useful. This tool would not only be useful for teams hiring new Environmental Health & Safety Managers that have yet to get the lay of the land of the workplaces they will be overseeing the operations of, but also an amazing source of clarification for the supervisors and the very workers belonging to workplaces that are doing the work itself. This tool can bridge the gap in understanding between groups of varying expertise by taking in user questions and translating from these large information-bases into a form that the user can tailor that is effective for them. In turn, this can effectively improve cross-functional communication and processes by augmenting the user's information-acquisition and understanding abilities.</p>
 
 <hr>
 
 ## Running the Application
-There are two ways to run the application :  using `mvn spring-boot:run` or by running the `Application` class directly from your IDE.
-You can use any IDE of your preference,but we suggest Eclipse or Intellij IDEA.
-Below are the configuration details to start the project using a `spring-boot:run` command. Both Eclipse and Intellij IDEA are covered.
+There are two ways to run the application :  using `mvn spring-boot:run` or by running the `Application` class directly from the IDE. Any IDE of your preference,but Eclipse or Intellij IDEA is suggested.
+Below are the configuration details to start the project using a `spring-boot:run` command. 
 
 #### Intellij IDEA
 - On the right side of the window, select Maven --> Plugins--> `spring-boot` --> `spring-boot:run` goal
@@ -14,45 +16,5 @@ Below are the configuration details to start the project using a `spring-boot:ru
 
 Clicking on the green run button will start the application.
 
-After the application has started, you can view your it at http://localhost:8080/ in your browser.
+After the application has started, the user can view the application at http://localhost:8080/ in their browser.
 
-
-If you want to run the application locally in the production mode, use `spring-boot:run -Pproduction` command instead.
-
-### Running Integration Tests
-
-Integration tests are implemented using [Vaadin TestBench](https://vaadin.com/testbench). The tests take a few minutes to run and are therefore included in a separate Maven profile. We recommend running tests with a production build to minimize the chance of development time toolchains affecting test stability. To run the tests using Google Chrome, execute
-
-`mvn verify -Pit,production`
-
-and make sure you have a valid TestBench license installed.
-
-## Structure
-
-Vaadin web applications are full-stack and include both client-side and server-side code in the same project.
-
-| Directory                                  | Description |
-|:-------------------------------------------| :--- |
-| `src/main/frontend/`                       | Client-side source directory |
-| &nbsp;&nbsp;&nbsp;&nbsp;`index.html`       | HTML template |
-| &nbsp;&nbsp;&nbsp;&nbsp;`index.ts`         | Frontend entrypoint |
-| &nbsp;&nbsp;&nbsp;&nbsp;`main-layout.ts`   | Main layout Web Component (optional) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`views/`           | UI views Web Components (TypeScript / HTML) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`styles/`          | Styles directory (CSS) |
-| `src/main/java/<groupId>/`                 | Server-side source directory |
-| &nbsp;&nbsp;&nbsp;&nbsp;`Application.java` | Server entrypoint |
-| &nbsp;&nbsp;&nbsp;&nbsp;`AppShell.java`    | application-shell configuration |
-
-## Useful links
-
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorials at [vaadin.com/tutorials](https://vaadin.com/tutorials).
-- Watch training videos and get certified at [vaadin.com/learn/training](https://vaadin.com/learn/training).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/components](https://vaadin.com/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Discover Vaadin's set of CSS utility classes that enable building any UI without custom CSS in the [docs](https://vaadin.com/docs/latest/ds/foundation/utility-classes). 
-- Find a collection of solutions to common use cases in [Vaadin Cookbook](https://cookbook.vaadin.com/).
-- Find Add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin/platform).

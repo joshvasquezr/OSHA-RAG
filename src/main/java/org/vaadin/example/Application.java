@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 
-@PWA(name = "Project 3 - GenAI Project", shortName = "CS514 Project 3", description = "Co-developed by John Riordan and Joshua Vasquez-Ruiz, this application was produced for the course CS514 taught by Dr. David Wolber at the University of San Francisco. Assigned as the course's third project, this project was designed to leverage the capabilities that Vaadin, an open-source web application development platform for Java, offered to develop an Generative AI application using OpenAI.")
+@PWA(name = "Project 3 - GenAI Project", shortName = "CS514 Project 3")
 @Theme("my-theme")
 public class Application implements AppShellConfigurator {
 
