@@ -1,8 +1,66 @@
-# Application Overview
+# Federal Regulations Expert Assistant (an OpenAI RAG Application)
+
+### Application Overview
 
 <p>Co-developed by John Riordan and Joshua Vasquez-Ruiz, this application was produced for the course CS514 taught by Dr. David Wolber at the University of San Francisco. Assigned as the course's third project, this project was designed to leverage the capabilities that Vaadin, an open-source web application development platform for Java, offered to develop an Generative AI application using OpenAI.</p>
 
+
 <p>The focus of this application was to create a chat bot that was capable of providing insight into occupational health regulations and requirements covered by Title 29 of the Code of Federal Regulations Part 1910. In PDF form, this collection of regulations that covers the Occupational Safety and Health Act, known as OSHA, spans over 600 pages. Documents such as this, if paired with a chat bot that could provide insight into these large information-bases, would be immensely useful. This tool would not only be useful for teams hiring new Environmental Health & Safety Managers that have yet to get the lay of the land of the workplaces they will be overseeing the operations of, but also an amazing source of clarification for the supervisors and the very workers belonging to workplaces that are doing the work itself. This tool can bridge the gap in understanding between groups of varying expertise by taking in user questions and translating from these large information-bases into a form that the user can tailor that is effective for them. In turn, this can effectively improve cross-functional communication and processes by augmenting the user's information-acquisition and understanding abilities.</p>
+
+### Project Functionality
+
+<p>The functionality of this app composes of a chat window with a message input and submit button for the user to type a prompt and submit it with. Adjacent to this is a clear chat button that the user can click to erase the chat history for any new queries. In response to new user text being submitted, the assistant's content retriever searches the federal document that has loaded, segmented, and embedded for a response to the user's query. </p>
+
+### Project Rubric
+<table>
+<thead>
+<tr>
+<td>Specifications (Base Project) </td>
+<td>Deductions</td>
+<td>Points</td>
+<td>Notes</td>
+</tr>
+<tr>
+<td>Message list and message input provided in Vaadin view</td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>Clear chat button present and works as specified</td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>When submitted, user message and assistant message added to message list in correct order</td>
+<td></td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>OpenAI assistant respond to user query and responds with reasonable answer</td>
+<td></td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td>Follow-up questioning yields reasonable responses and conversation can progress with further user questioning </td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Extra Credit: </strong>OpenAI assistant leverages content retrieval to search loaded document(s) and responses are unique to document</td>
+<td></td>
+<td>15</td>
+<td></td>
+</tr>
+
+</thead>
+</table>
+
+
 
 <hr>
 
