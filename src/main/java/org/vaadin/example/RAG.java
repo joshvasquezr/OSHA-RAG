@@ -28,7 +28,7 @@ import static dev.langchain4j.model.openai.OpenAiChatModelName.GPT_4_O_MINI;
 import static shared.Utils.startConversationWith;
 
 
-public class Naive_RAG_Example {
+public class RAG {
 
     /**
      * This example demonstrates how to implement a naive Retrieval-Augmented Generation (RAG) application.

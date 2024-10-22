@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import shared.Assistant;
 
-import static org.vaadin.example.Naive_RAG_Example.createAssistant;
+import static org.vaadin.example.RAG.createAssistant;
 
 
 @RestController

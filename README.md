@@ -1,23 +1,93 @@
-# Project Base for Vaadin and Spring Boot
+# Federal Regulations Expert Assistant (an OpenAI RAG Application)
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+### Application Overview
 
-The best way to create your own project based on this starter is [start.vaadin.com](https://start.vaadin.com/) - you can get only the necessary parts and choose the package naming you want to use.
+<p>Co-developed by John Riordan and Joshua Vasquez-Ruiz, this application was produced for the course CS514 taught by Dr. David Wolber at the University of San Francisco. Assigned as the course's third project, this project was designed to leverage the capabilities that Vaadin, an open-source web application development platform for Java, offered to develop an Generative AI application using OpenAI.</p>
+
+
+<p>The focus of this application was to create a chat bot that was capable of providing insight into occupational health regulations and requirements covered by Title 29 of the Code of Federal Regulations Part 1910. In PDF form, this collection of regulations that covers the Occupational Safety and Health Act, known as OSHA, spans over 600 pages. Documents such as this, if paired with a chat bot that could provide insight into these large information-bases, would be immensely useful. This tool would not only be useful for teams hiring new Environmental Health & Safety Managers that have yet to get the lay of the land of the workplaces they will be overseeing the operations of, but also an amazing source of clarification for the supervisors and the very workers belonging to workplaces that are doing the work itself. This tool can bridge the gap in understanding between groups of varying expertise by taking in user questions and translating from these large information-bases into a form that the user can tailor that is effective for them. In turn, this can effectively improve cross-functional communication and processes by augmenting the user's information-acquisition and understanding abilities.</p>
+
+### Project Functionality
+
+<p>The functionality of this app composes of a chat window with a message input and submit button for the user to type a prompt and submit it with. Adjacent to this is a clear chat button that the user can click to erase the chat history for any new queries. In response to new user text being submitted, the assistant's content retriever searches the federal document that has loaded, segmented, and embedded for a response to the user's query. </p>
+
+## Challenges During Develpment Process
+<p>This is not an exhaustive list of all the challenges we faced during the project, but rather a summary of some of the
+key issues that provided valuable learning experiences.</p>
+
+1. **Context Management Across Interactions**
+    - **Problem**: The system struggled to retain previous user queries and responses, resulting in the loss of important context needed for accurate and context-aware responses.
+    - **Solution**: Implemented a memory storage mechanism using LangChain’s `ChatMemory` to store past interactions, ensuring context was preserved between queries.
+
+2. **Fine-Tuning Document Retrieval**
+    - **Problem**: Documents retrieved from the embedding store were not always closely related to the user query, which caused the generated responses to lack specificity.
+    - **Solution**: Adjusted the document indexing and retrieval strategy by optimizing the document embedding process, ensuring more accurate matching between user queries and retrieved content.
+
+3. **Front-End/Back-End Synchronization**
+    - **Problem**: There were delays and incorrect responses due to mismatches between user inputs and the retrieval results.
+    - **Solution**: Implemented asynchronous API calls and improved request handling to ensure that the retrieval process was completed before generating the response.
+
+4. **File Path and Directory Management**
+    - **Problem**: Changes to the original files unintentionally propagated to the `target/classes` directory, causing inconsistencies in the files being used for document ingestion.
+    - **Solution**: Reorganized the file structure and separated the build artifacts from source files, preventing unwanted file mirroring during document ingestion.
+
+
+### Project Rubric
+<table>
+<thead>
+<tr>
+<td>Specifications (Base Project) </td>
+<td>Deductions</td>
+<td>Points</td>
+<td>Notes</td>
+</tr>
+<tr>
+<td>Message list and message input provided in Vaadin view</td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>Clear chat button present and works as specified</td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>When submitted, user message and assistant message added to message list in correct order</td>
+<td></td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>OpenAI assistant respond to user query and responds with reasonable answer</td>
+<td></td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td>Follow-up questioning yields reasonable responses and conversation can progress with further user questioning </td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Extra Credit: </strong>OpenAI assistant leverages content retrieval to search loaded document(s) and responses are unique to document</td>
+<td></td>
+<td>15</td>
+<td></td>
+</tr>
+
+</thead>
+</table>
+
+
+
+<hr>
 
 ## Running the Application
-There are two ways to run the application :  using `mvn spring-boot:run` or by running the `Application` class directly from your IDE.
-
-You can use any IDE of your preference,but we suggest Eclipse or Intellij IDEA.
-Below are the configuration details to start the project using a `spring-boot:run` command. Both Eclipse and Intellij IDEA are covered.
-
-#### Eclipse
-- Right click on a project folder and select `Run As` --> `Maven build..` . After that a configuration window is opened.
-- In the window set the value of the **Goals** field to `spring-boot:run` 
-- You can optionally select `Skip tests` checkbox
-- All the other settings can be left to default
-
-Once configurations are set clicking `Run` will start the application
+There are two ways to run the application :  using `mvn spring-boot:run` or by running the `Application` class directly from the IDE. Any IDE of your preference,but Eclipse or Intellij IDEA is suggested.
+Below are the configuration details to start the project using a `spring-boot:run` command. 
 
 #### Intellij IDEA
 - On the right side of the window, select Maven --> Plugins--> `spring-boot` --> `spring-boot:run` goal
@@ -25,45 +95,12 @@ Once configurations are set clicking `Run` will start the application
 
 Clicking on the green run button will start the application.
 
-After the application has started, you can view your it at http://localhost:8080/ in your browser.
+After the application has started, the user can view the application at http://localhost:8080/ in their browser.
 
+<hr>
 
-If you want to run the application locally in the production mode, use `spring-boot:run -Pproduction` command instead.
-
-### Running Integration Tests
-
-Integration tests are implemented using [Vaadin TestBench](https://vaadin.com/testbench). The tests take a few minutes to run and are therefore included in a separate Maven profile. We recommend running tests with a production build to minimize the chance of development time toolchains affecting test stability. To run the tests using Google Chrome, execute
-
-`mvn verify -Pit,production`
-
-and make sure you have a valid TestBench license installed.
-
-## Structure
-
-Vaadin web applications are full-stack and include both client-side and server-side code in the same project.
-
-| Directory                                  | Description |
-|:-------------------------------------------| :--- |
-| `src/main/frontend/`                       | Client-side source directory |
-| &nbsp;&nbsp;&nbsp;&nbsp;`index.html`       | HTML template |
-| &nbsp;&nbsp;&nbsp;&nbsp;`index.ts`         | Frontend entrypoint |
-| &nbsp;&nbsp;&nbsp;&nbsp;`main-layout.ts`   | Main layout Web Component (optional) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`views/`           | UI views Web Components (TypeScript / HTML) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`styles/`          | Styles directory (CSS) |
-| `src/main/java/<groupId>/`                 | Server-side source directory |
-| &nbsp;&nbsp;&nbsp;&nbsp;`Application.java` | Server entrypoint |
-| &nbsp;&nbsp;&nbsp;&nbsp;`AppShell.java`    | application-shell configuration |
-
-## Useful links
-
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorials at [vaadin.com/tutorials](https://vaadin.com/tutorials).
-- Watch training videos and get certified at [vaadin.com/learn/training](https://vaadin.com/learn/training).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/components](https://vaadin.com/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Discover Vaadin's set of CSS utility classes that enable building any UI without custom CSS in the [docs](https://vaadin.com/docs/latest/ds/foundation/utility-classes). 
-- Find a collection of solutions to common use cases in [Vaadin Cookbook](https://cookbook.vaadin.com/).
-- Find Add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin/platform).
+<p>To test the chatbot, some relevant queries are listed below:</p>
+<ul>
+<li>What are regulations that you can point me to given my following situation: We have a room that we have two painting booths in that we use to spray aircraft parts. This paint contains hexavalent chromium and is the main hazard that we are concerned about. Industrial hygienists working with us have also identified they only have three breathing zone samples during our painting operations. They say that one of those breathing samples has an 8-hr TWA that is really close to something called the action level and two have 8-hr TWA’s that are close to zero. Even though all the samples are below, they still seem concerned about the one that's really close to the action level. Do we have to close painting operations until they take more sampling?<ul>
+<li>Expand on the RP requirements<ul><li>What kind of medical evaluations do we need if we were to have samples with an 8-hr TWA over the OEL?<ul><li>What kind of medical tests should we receive?</li></ul></li></ul></li></ul></li>
+</ul>
