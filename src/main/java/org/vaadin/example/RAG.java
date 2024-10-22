@@ -72,7 +72,7 @@ public class RAG {
         // File System, UR, Amazon S3, Azure Blob Storage, GitHub, Tencent COS.
         // Additionally, LangChain4j supports parsing multiple document types;
         // text, pdf, doc, xls, ppt
-        // Howeverm you can also manually import your data from other sources.
+        // However you can also manually import your data from other sources.
         DocumentParser documentParser = new TextDocumentParser();
         Document document = loadDocument(Paths.get("src/main/resources/docs/title-29.json"), documentParser);
 
