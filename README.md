@@ -11,6 +11,27 @@
 
 <p>The functionality of this app composes of a chat window with a message input and submit button for the user to type a prompt and submit it with. Adjacent to this is a clear chat button that the user can click to erase the chat history for any new queries. In response to new user text being submitted, the assistant's content retriever searches the federal document that has loaded, segmented, and embedded for a response to the user's query. </p>
 
+## Challenges During Develpment Process
+<p>This is not an exhaustive list of all the challenges we faced during the project, but rather a summary of some of the
+key issues that provided valuable learning experiences.</p>
+
+1. **Context Management Across Interactions**
+    - **Problem**: The system struggled to retain previous user queries and responses, resulting in the loss of important context needed for accurate and context-aware responses.
+    - **Solution**: Implemented a memory storage mechanism using LangChain’s `ChatMemory` to store past interactions, ensuring context was preserved between queries.
+
+2. **Fine-Tuning Document Retrieval**
+    - **Problem**: Documents retrieved from the embedding store were not always closely related to the user query, which caused the generated responses to lack specificity.
+    - **Solution**: Adjusted the document indexing and retrieval strategy by optimizing the document embedding process, ensuring more accurate matching between user queries and retrieved content.
+
+3. **Front-End/Back-End Synchronization**
+    - **Problem**: There were delays and incorrect responses due to mismatches between user inputs and the retrieval results.
+    - **Solution**: Implemented asynchronous API calls and improved request handling to ensure that the retrieval process was completed before generating the response.
+
+4. **File Path and Directory Management**
+    - **Problem**: Changes to the original files unintentionally propagated to the `target/classes` directory, causing inconsistencies in the files being used for document ingestion.
+    - **Solution**: Reorganized the file structure and separated the build artifacts from source files, preventing unwanted file mirroring during document ingestion.
+
+
 ### Project Rubric
 <table>
 <thead>
